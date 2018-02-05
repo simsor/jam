@@ -4,52 +4,12 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
-	"os/exec"
 	"strconv"
 	"strings"
 	"time"
 )
 
 var (
-	/*notes = map[string]float32{*/
-	//"C0":  130.81,
-	//"C0X": 138.59,
-	//"D0":  146.83,
-	//"D0X": 155.56,
-	//"E0":  164.81,
-	//"F0":  174.61,
-	//"F0X": 185.00,
-	//"G0":  196.00,
-	//"G0X": 207.65,
-	//"A0":  220.00,
-	//"A0X": 233.08,
-	//"B0":  246.94,
-	//"C1":  261.63,
-	//"C1X": 277.18,
-	//"D1":  293.66,
-	//"D1X": 311.13,
-	//"E1":  329.63,
-	//"F1":  349.23,
-	//"F1X": 369.99,
-	//"G1":  391.00,
-	//"G1X": 415.30,
-	//"A1":  440.00,
-	//"A1X": 466.16,
-	//"B1":  493.88,
-	//"C2":  523.25,
-	//"C2X": 554.37,
-	//"D2":  587.33,
-	//"D2X": 622.25,
-	//"E2":  659.26,
-	//"F2":  698.46,
-	//"F2X": 739.99,
-	//"G2":  783.99,
-	//"G2X": 830.61,
-	//"A2":  880.00,
-	//"A2X": 923.33,
-	//"B2":  987.77,
-	//"C3":  1046.50,
-	/*}*/
 	notes = map[string]int{
 		"B0":  31,
 		"C1":  33,
@@ -144,14 +104,6 @@ var (
 	music_sheet []byte
 )
 
-func beep(freq int, dur int) {
-	cmd := exec.Command("./beep", "-f", strconv.Itoa(freq), "-l", strconv.Itoa(dur))
-	err := cmd.Run()
-	if err != nil {
-		panic(err)
-	}
-}
-
 func init() {
 	var filename *string
 	var err error
@@ -165,7 +117,14 @@ func init() {
 }
 
 func main() {
+	var err error
 	fmt.Println("beep-jam 0.1")
+
+	beeper, err := NewBeeper()
+	if err != nil {
+		fmt.Println("Could not create beeper")
+		panic(err)
+	}
 
 	s := string(music_sheet[:])
 	lines := strings.Split(s, "\n")
@@ -194,7 +153,7 @@ func main() {
 			}
 
 			fmt.Println("Playing", note, "for", duration, "ms")
-			beep(notes[note], duration)
+			beeper.Beep(float32(notes[note]), duration)
 		}
 	}
 }
