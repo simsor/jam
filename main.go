@@ -4,6 +4,8 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
+	"os"
+	"os/signal"
 	"strconv"
 	"strings"
 	"time"
@@ -125,6 +127,16 @@ func main() {
 		fmt.Println("Could not create beeper")
 		panic(err)
 	}
+
+	// Create the handler for SIGINT
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt)
+	go func() {
+		<-c
+		fmt.Println("\n\nGot Ctrl-C'd")
+		beeper.Beep(0.0, 1)
+		os.Exit(1)
+	}()
 
 	s := string(music_sheet[:])
 	lines := strings.Split(s, "\n")
