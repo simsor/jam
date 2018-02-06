@@ -188,15 +188,17 @@ func main() {
 
 		progress := int(float64(idx) / float64(numLines) * 100)
 
-		fmt.Printf("\r")
-		for i := 0; i < progress; i++ {
+		fmt.Printf("\r[")
+		for i := 0; i < progress-1; i++ {
 			fmt.Printf("=")
 		}
+		fmt.Printf(">")
 
 		for i := progress; i < 100; i++ {
 			fmt.Printf(" ")
 		}
 
-		fmt.Printf("[%d%%]", progress)
+		fmt.Printf("] %d%% ", progress)
 	}
+	fmt.Print("\n")
 }
