@@ -154,10 +154,29 @@ func main() {
 
 			time.Sleep(time.Duration(delay) * time.Millisecond)
 		} else if strings.HasPrefix(l, ";") {
-			// RIEN COMMENTAIRE
+			// Do nothing, it's a comment
+		} else if strings.HasPrefix(l, "FREQ") {
+			parts := strings.Split(l, " ")
+			freq, err := strconv.Atoi(parts[1])
+			if err != nil {
+				fmt.Println("Error reading", l)
+				panic(err)
+			}
+
+			dur, err := strconv.Atoi(parts[2])
+			if err != nil {
+				fmt.Println("Error reading", l)
+				panic(err)
+			}
+
+			fmt.Println("Playing frequency", freq, "for", dur, "ms")
+			beeper.Beep(float32(freq), dur)
 		} else {
 			parts := strings.Split(l, " ")
 			note := parts[0]
+			if _, ok := notes[note]; !ok {
+				panic("Unknown note: " + note)
+			}
 			duration, err := strconv.Atoi(parts[1])
 
 			if err != nil {
