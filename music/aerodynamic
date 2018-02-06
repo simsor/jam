@@ -1,5 +1,3 @@
-#!/bin/bash
-
 FREQ 587 122 
 FREQ 370 122 
 FREQ 493 122 
