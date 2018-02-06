@@ -140,7 +140,8 @@ func main() {
 
 	s := string(music_sheet[:])
 	lines := strings.Split(s, "\n")
-	for _, l := range lines {
+	numLines := len(lines)
+	for idx, l := range lines {
 		l := strings.TrimSpace(l)
 		if l == "" {
 			continue
@@ -169,7 +170,6 @@ func main() {
 				panic(err)
 			}
 
-			fmt.Println("Playing frequency", freq, "for", dur, "ms")
 			beeper.Beep(float32(freq), dur)
 		} else {
 			parts := strings.Split(l, " ")
@@ -183,8 +183,20 @@ func main() {
 				panic(err)
 			}
 
-			fmt.Println("Playing", note, "for", duration, "ms")
 			beeper.Beep(float32(notes[note]), duration)
 		}
+
+		progress := int(float64(idx) / float64(numLines) * 100)
+
+		fmt.Printf("\r")
+		for i := 0; i < progress; i++ {
+			fmt.Printf("=")
+		}
+
+		for i := progress; i < 100; i++ {
+			fmt.Printf(" ")
+		}
+
+		fmt.Printf("[%d%%]", progress)
 	}
 }
