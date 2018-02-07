@@ -20,3 +20,21 @@ FREQ 440 500
 ``
 
 Will play a sound at 440Hz for 500ms
+
+## Managing the tempo
+
+You can use the ``TEMPO`` command to change the speed your music will be played at (in beats per minute, or bpm).
+
+After issuing the ``TEMPO`` command, times will we treated as multiples of the tempo.
+
+For example:
+
+```
+TEMPO 120
+A3 1
+B4 0.5
+C4 0.5
+PAUSE 2
+```
+
+Will set the tempo to 120bpm, then play A3 for 1 beat (500ms), B4 for half a beat, C4 for half a beat and pause for 2 beats
