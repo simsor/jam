@@ -102,6 +102,7 @@ var notes = map[string]int{
 // Jammer is an object which can play sounds on your motherboard speaker
 type Jammer struct {
 	beeper      *Beeper
+	tempo       float64
 	Lines       []string
 	CurrentLine int
 }
@@ -116,6 +117,7 @@ func NewJammer(music string) (*Jammer, error) {
 	}
 
 	j.beeper = b
+	j.tempo = 1
 	j.Lines = strings.Split(music, "\n")
 	return j, nil
 }
@@ -137,22 +139,27 @@ func (j *Jammer) PlayNext() {
 	parts := strings.Split(line, " ")
 	switch parts[0] {
 	case "PAUSE":
-		dur, err := strconv.Atoi(parts[1])
+		dur, err := strconv.ParseFloat(parts[1], 64)
 		j.check(err)
-		time.Sleep(time.Duration(dur) * time.Millisecond)
+		time.Sleep(time.Duration(int(dur*j.tempo)) * time.Millisecond)
 	case "FREQ":
 		freq, err := strconv.Atoi(parts[1])
 		j.check(err)
 
-		dur, err := strconv.Atoi(parts[2])
+		dur, err := strconv.ParseFloat(parts[2], 64)
 		j.check(err)
 
 		j.PlayFreq(float32(freq), dur)
+	case "TEMPO":
+		tempo, err := strconv.Atoi(parts[1])
+		j.check(err)
+
+		j.tempo = bpmToMs(tempo)
 	case ";":
 		// Comment
 	default:
 		note := parts[0]
-		dur, err := strconv.Atoi(parts[1])
+		dur, err := strconv.ParseFloat(parts[1], 64)
 		j.check(err)
 
 		j.PlayNote(note, dur)
@@ -166,13 +173,19 @@ func (j *Jammer) check(err error) {
 	}
 }
 
+func bpmToMs(bpm int) float64 {
+	bps := float64(bpm) / 60.0
+	seconds_per_beat := 1.0 / bps
+	return seconds_per_beat * 1000
+}
+
 // PlayFreq plays a specific frequency for a certain duration on the internal speaker
-func (j *Jammer) PlayFreq(freq float32, dur int) {
-	j.beeper.Beep(freq, dur)
+func (j *Jammer) PlayFreq(freq float32, dur float64) {
+	j.beeper.Beep(freq, int(dur*j.tempo))
 }
 
 // PlayNote plays a specific note
-func (j *Jammer) PlayNote(note string, dur int) {
+func (j *Jammer) PlayNote(note string, dur float64) {
 	freq, ok := notes[note]
 	if !ok {
 		panic("Unknown note " + note + " on line " + strconv.Itoa(j.CurrentLine))
