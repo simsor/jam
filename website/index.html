@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>BEEP JS</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <script src="js/beep.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.bundle.min.js"></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Jam</a>
+
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active"><a href="#" class="nav-link">Editor</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" id="showHelp" data-toggle="modal" data-target="#modal">Help</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container">
+            <h1>type away~ 
+            <button class="btn btn-primary btn-sm" id="ok">Play</button></h1>
+            <textarea class="form-control form-control-lg" id="music" rows=20></textarea><br>
+        </div>
+
+        <div id="modal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Help</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <ul>
+                            <li><code>; comment</code> Creates a comment.</li>
+                            <li><code>C0...B5 <i>duration</i></code> Play the corresponding note for <code>duration</code> milliseconds</li>
+                            <li><code>PAUSE <i>duration</i></code> Pauses the playback for <code>duration</code> milliseconds</li>
+                            <li><code>FREQ <i>frequency</i> <i>duration</i></code> Plays the given <code>frequency</code> for <code>duration</code> milliseconds</li>
+                            <li><code>TEMPO <i>bpm</i></code> Changes the song speed to <code>bpm</code> bpm. Subsequent durations will be interpreted as beats</li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <script>
+        var btn = document.getElementById("ok");
+        var txt = document.getElementById("music");
+
+        btn.onclick = function() {
+            let content = txt.value;
+
+            notes = stringToNotes(content);
+            if (notes != undefined) {
+                notes.reverse();
+                playMelody();
+            }
+        }
+    </script>
+    </body>
+</html>

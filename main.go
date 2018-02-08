@@ -18,6 +18,14 @@ func init() {
 
 	filename = flag.String("music_sheet", "", "the music sheet to load and play")
 	flag.Parse()
+
+	if *filename == "" {
+		webServer, _ := NewWebServer("website/")
+		fmt.Println("Running the web server on port 8080")
+		webServer.OpenBrowser()
+		webServer.Run()
+	}
+
 	music_sheet, err = ioutil.ReadFile(*filename)
 	if err != nil {
 		panic(err)
