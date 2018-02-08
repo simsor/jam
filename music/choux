@@ -1,0 +1,36 @@
+; http://www.jeux2notes.fr/Musiques_de_film_files/soupe_choux_flute.pdf
+
+TEMPO 120
+
+E5 0.25
+D5 0.25
+C5 0.25
+B4 0.25
+
+A4 0.5
+G4 0.5
+
+A4 0.25
+B4 0.25
+C5 0.5
+
+C5 0.25
+D5 0.25
+E5 0.5
+
+; Deuxieme ligne
+E5 0.25
+D5 0.25
+C5 0.25
+B4 0.25
+
+A4 0.5
+A4 0.25
+C5 0.25
+
+B4 0.25
+A4 0.25
+B4 0.25
+G4 0.25
+
+E4 1	
