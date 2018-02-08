@@ -1,6 +1,7 @@
-notes = [];
-notes.reverse(); 
-tempo = 1;
+var notes = [];
+var tempo = 1;
+var isRunning = false;
+var shouldStop = false;
 var notesFreqs = {
 		"B0":  31,
 		"C1":  33,
@@ -104,32 +105,32 @@ function stringToNotes(s) {
         let line = lines[i].trim();
         let parts = line.split(" ")
 
-        if (parts[0] == ";" || line == "" || line[0] == ";") {
+        if (parts[0] == ";" || line == "") {
             continue;
         } else if (parts[0] == "FREQ") {
             let freq = parseFloat(parts[1]);
             let duration = parseFloat(parts[2]);
             
-            if (isNaN(freq) || isNaN(duration)) { alert("Error line " + i + ": not a number"); return; }
+            if (isNaN(freq) || isNaN(duration)) { alert("Error line " + (i+1) + ": not a number"); return; }
 
             notes.push([freq, duration]);
         } else if (parts[0] == "PAUSE") {
             let duration = parseFloat(parts[1]);
 
-            if (isNaN(duration)) { alert("Error line " + i + ": not a number"); return; }
+            if (isNaN(duration)) { alert("Error line " + (i+1) + ": not a number"); return; }
 
             notes.push([0, duration]);
         } else if (parts[0] == "TEMPO") {
             let t = parseFloat(parts[1]);
 
-            if (isNaN(t)) { alert("Error line "+i+": not a number"); return;}
+            if (isNaN(t)) { alert("Error line "+(i+1)+": not a number"); return;}
 
             notes.push(["tempo", bpmToMs(t)]);
         } else {
             let note = parts[0];
             let duration = parseFloat(parts[1]);
 
-            if (isNaN(duration)) { alert("Error line " + i + ": not a number"); return; }
+            if (isNaN(duration)) { alert("Error line " + (i+1) + ": not a number"); return; }
             
             let notesKeys = Object.keys(notesFreqs);
             let found = false;
@@ -142,7 +143,7 @@ function stringToNotes(s) {
             }
 
             if (!found) {
-                alert("Error line " + i + ": unknown note " + note);
+                alert("Error line " + (i+1) + ": unknown note " + note);
                 return;
             }
         }
@@ -154,15 +155,16 @@ function stringToNotes(s) {
 function playMelody(){
 	if (notes.length > 0){
 		note = notes.pop();
-                console.log(note[0]);
                 if (note[0] == "tempo") {
-                    console.log("changing tempo to " + note[1]);
                     tempo = note[1];
                     playMelody();
                     return;
                 }
 		playNote(note[0], note[1]*tempo);
-	}
+	} else {
+            isRunning = false;
+            shouldStop = false;
+        }
 }
 
 function playNote(frequency, duration) {
@@ -177,7 +179,12 @@ function playNote(frequency, duration) {
 	setTimeout(
 		function(){
 			oscillator.stop();
-                        //setTimeout(function(){ playMelody();}, 1);
+                        if (shouldStop) {
+                            isRunning = false;
+                            shouldStop = false;
+                            notes = []
+                            return;
+                        }
                         playMelody();
 		}, duration);
 }
