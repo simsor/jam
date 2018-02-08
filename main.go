@@ -22,6 +22,7 @@ func init() {
 	if *filename == "" {
 		webServer, _ := NewWebServer("website/")
 		fmt.Println("Running the web server on port 8080")
+		fmt.Println("Run 'jam -h' if you don't want that")
 		webServer.OpenBrowser()
 		webServer.Run()
 	}
