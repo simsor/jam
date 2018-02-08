@@ -72,8 +72,8 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <ul id="music-list">
-                        </ul>
+                        <div id="music-list" class="list-group list-group-flush">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -107,22 +107,24 @@
 
             for (let i=0; i < sheets.length; i++) {
                 let name = sheets[i];
-                let elem = $("<li></li>");
+                let elem = $("<a></a>");
                 elem.text(name);
+                elem.addClass("list-group-item d-flex justify-content-between align-items-center");
+                elem.attr("style", "cursor: pointer");
 
-                let btnLoad = $("<button></button>");
-                btnLoad.addClass("btn btn-success btn-sm");
-                btnLoad.text("Load");
+                //let btnLoad = $("<button></button>");
+                //btnLoad.addClass("btn btn-success btn-sm");
+                //btnLoad.text("Load");
 
-                btnLoad.click(function(){ loadSheetCb(name); });
+                elem.click(function(){ loadSheetCb(name); });
 
-                let btnDel = $("<button></button>");
-                btnDel.addClass("btn btn-danger btn-sm");
-                btnDel.text("Delete");
+                let btnDel = $("<span></span>");
+                btnDel.addClass("badge badge-primary badge-pill");
+                btnDel.html("<i class=''></i> Delete");
 
                 btnDel.click(function(){ delSheetCb(name); });
                 
-                elem.append(btnLoad).append(btnDel);
+                elem.append(btnDel);
                 $("#music-list").append(elem);
             }
 
