@@ -3,11 +3,14 @@
     <head>
         <title>BEEP JS</title>
         <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/jquery-linedtextarea.css">
+
         <script src="js/beep.js"></script>
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="js/jquery-linedtextarea.js"></script>
     </head>
-    <body>
+    <body> 
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <a class="navbar-brand" href="#">Jam</a>
 
@@ -21,8 +24,10 @@
 
         <div class="container">
             <h1>type away~ 
-            <button class="btn btn-primary btn-sm" id="ok">Play</button></h1>
-            <textarea class="form-control form-control-lg" id="music" rows=20></textarea><br>
+                <button class="btn btn-primary btn-sm" id="ok">Play</button>
+                <button class="btn btn-danger btn-sm" id="stop">Stop</button>
+            </h1>
+            <textarea style="width:100%" id="music" rows=30></textarea><br>
         </div>
 
         <div id="modal" class="modal" tabindex="-1" role="dialog">
@@ -52,17 +57,28 @@
 
     <script>
         var btn = document.getElementById("ok");
+        var stop = document.getElementById("stop");
         var txt = document.getElementById("music");
 
         btn.onclick = function() {
             let content = txt.value;
 
             notes = stringToNotes(content);
-            if (notes != undefined) {
+            if (notes != undefined && !isRunning) {
+                isRunning = true;
+                shouldStop = false;
                 notes.reverse();
                 playMelody();
             }
         }
+
+        stop.onclick = function() {
+            if (isRunning) {
+                shouldStop = true;
+            }
+        }
+
+        $("#music").linedtextarea();
     </script>
     </body>
 </html>
