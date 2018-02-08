@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>BEEP JS</title>
+        <title>JamJS</title>
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/jquery-linedtextarea.css">
 
         <script src="js/beep.js"></script>
+        <script src="js/local.js"></script>
+
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.bundle.min.js"></script>
         <script src="js/jquery-linedtextarea.js"></script>
@@ -19,6 +21,11 @@
                     <li class="nav-item active"><a href="#" class="nav-link">Editor</a></li>
                     <li class="nav-item"><a href="#" class="nav-link" id="showHelp" data-toggle="modal" data-target="#modal">Help</a></li>
                 </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input id="sheet-name" class="form-control mr-sm-2" placeholder="Music name">
+                    <button id="save" type="button" class="btn btn-outline-success my-2 my-sm-0" style="margin-right:5px">Save</button>
+                    <button id="load" type="button" class="btn btn-outline-secondary my-2 my-sm-0">Load</button>
+                </form>
             </div>
         </nav>
 
@@ -30,7 +37,7 @@
             <textarea style="width:100%" id="music" rows=30></textarea><br>
         </div>
 
-        <div id="modal" class="modal" tabindex="-1" role="dialog">
+        <div id="modal" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -55,6 +62,22 @@
             </div>
         </div>
 
+        <div id="loadModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                   <div class="modal-header">
+                        <h5 class="modal-title">Load music</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <ul id="music-list">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     <script>
         var btn = document.getElementById("ok");
         var stop = document.getElementById("stop");
@@ -78,7 +101,60 @@
             }
         }
 
+        $("#load").click(function(e) {
+            let sheets = getSheetsList();
+            $("#music-list").html("");
+
+            for (let i=0; i < sheets.length; i++) {
+                let name = sheets[i];
+                let elem = $("<li></li>");
+                elem.text(name);
+
+                let btnLoad = $("<button></button>");
+                btnLoad.addClass("btn btn-success btn-sm");
+                btnLoad.text("Load");
+
+                btnLoad.click(function(){ loadSheetCb(name); });
+
+                let btnDel = $("<button></button>");
+                btnDel.addClass("btn btn-danger btn-sm");
+                btnDel.text("Delete");
+
+                btnDel.click(function(){ delSheetCb(name); });
+                
+                elem.append(btnLoad).append(btnDel);
+                $("#music-list").append(elem);
+            }
+
+            $("#loadModal").modal();
+        });
+
+        $("#save").click(function(e) {
+            let content = txt.value;
+            let name = $("#sheet-name").val();
+
+            updateSheet(name, content);
+            alert("Saved");
+        });
+
         $("#music").linedtextarea();
+
+        function loadSheetCb(name) {
+            let content = getSheet(name);
+            $("#music").val(content);
+            $("#sheet-name").val(name);
+            $("#loadModal").modal("toggle");
+        }
+
+        function delSheetCb(name) {
+            let ok = confirm("Really delete " + name + "?");
+            if (ok) {
+                deleteSheet(name);
+                $("#music").val("");
+                $("#sheet-name").val("");
+                $("#loadModal").modal("toggle");
+            }
+        }
     </script>
     </body>
 </html>
