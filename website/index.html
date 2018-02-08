@@ -86,12 +86,14 @@
         btn.onclick = function() {
             let content = txt.value;
 
-            notes = stringToNotes(content);
-            if (notes != undefined && !isRunning) {
-                isRunning = true;
-                shouldStop = false;
-                notes.reverse();
-                playMelody();
+            if (!isRunning) {
+                notes = stringToNotes(content);
+                if (notes != undefined) {
+                    isRunning = true;
+                    shouldStop = false;
+                    notes.reverse();
+                    playMelody();
+                }
             }
         }
 
