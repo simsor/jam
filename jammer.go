@@ -136,6 +136,10 @@ func (j *Jammer) PlayNext() {
 		return
 	}
 
+	if line[0] == ";" {
+		return
+	}
+
 	parts := strings.Split(line, " ")
 	switch parts[0] {
 	case "PAUSE":

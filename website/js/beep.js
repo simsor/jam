@@ -105,7 +105,7 @@ function stringToNotes(s) {
         let line = lines[i].trim();
         let parts = line.split(" ")
 
-        if (parts[0] == ";" || line == "") {
+        if (parts[0] == ";" || line == "" || line[0] == ";") {
             continue;
         } else if (parts[0] == "FREQ") {
             let freq = parseFloat(parts[1]);
