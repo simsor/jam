@@ -1,5 +1,7 @@
 # jam - play some music through your PC speakers
 
+![screenshot](screenshot_web.png)
+
 ## Prerequisites
 
 * A Linux box if you want to actually make your motherboard beep. 
