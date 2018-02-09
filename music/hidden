@@ -1,0 +1,146 @@
+; https://musescore.com/user/63918/scores/203251
+
+TEMPO 138
+
+; G3 2
+; G3 0.5
+; A3 0.5
+; AS3 0.5 ; B bemol
+; G3 0.5
+
+; F3 2
+; D3 2
+
+; D4 4
+
+; D4 4
+
+; PAUSE 4
+
+; second line
+G3 2
+G3 0.5
+A3 0.5
+AS3 0.5 ; B bemol
+G3 0.5
+
+F3 2
+D3 2
+
+; third line
+G3 2
+G3 0.5
+A3 0.5
+AS3 0.5 ; B bemol
+G3 0.5
+
+F3 4
+
+G3 2
+G3 0.5
+A3 0.5
+AS3 0.5 ; B bemol
+G3 0.5
+
+; fourth line
+F3 2
+D3 2
+
+G3 1
+DS4 1
+D4 1
+AS3 1
+
+A3 1.5
+G3 0.25
+F3 0.25
+A3 2
+
+; fifth line
+G3 2
+G3 0.5
+A3 0.5
+AS3 0.5
+G3 0.5
+
+F3 2
+D3 2
+
+G3 2
+G3 0.5
+A3 0.5
+AS3 0.5 ; B bemol
+G3 0.5
+
+; sixth line
+F3 4
+
+G3 2
+G3 0.5
+A3 0.5
+AS3 0.5 ; B bemol
+G3 0.5
+
+F3 2
+D3 2
+
+; seventh line
+G3 1
+DS4 1
+D4 1
+AS3 1
+
+A3 1.5
+G3 0.25
+F3 0.25
+A3 1.5
+G3 0.25
+A3 0.25
+
+AS3 2 ; B bemol
+AS3 0.5
+C4 0.5
+D4 0.05
+AS3 0.5
+
+; eigth line
+A3 2
+F3 1
+F3 1
+
+AS3 2
+AS3 0.5
+C4 0.5
+D4 0.5
+AS3 0.5
+
+A3 4
+
+; ninth linne
+AS3 2
+AS3 0.5
+C4 0.5
+D4 0.5
+AS3 0.5
+
+A3 2
+F3 2
+
+D3 1
+AS3 1
+A3 1
+F3 1
+
+G3 1.5
+F3 0.25
+G3 0.25
+E3 2
+
+; tenth line
+D3 1
+AS3 1
+A3 1
+F3 1
+
+E3 3
+PAUSE 1
