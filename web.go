@@ -38,7 +38,7 @@ func (ws *WebServer) OpenBrowser() {
 	case "windows":
 		command = "cmd"
 		args = []string{"/c", "start"}
-	case "osx":
+	case "darwin":
 		command = "open"
 	default:
 		command = "xdg-open"
