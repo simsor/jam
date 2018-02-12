@@ -136,7 +136,7 @@ func (j *Jammer) PlayNext() {
 		return
 	}
 
-	if line[0] == ";" {
+	if line[0] == ';' {
 		return
 	}
 
