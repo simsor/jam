@@ -33,10 +33,12 @@
         </nav>
 
         <div class="container">
-            <h1>type away~ 
+            <h1 class="d-inline-block">type away~ 
                 <button class="btn btn-primary btn-sm" id="ok">Play</button>
                 <button class="btn btn-danger btn-sm" id="stop">Stop</button>
             </h1>
+            <small>Start at line</small> 
+            <input type="number" id="startLine" value="1">
             <textarea style="width:100%" id="music" rows=30></textarea><br>
         </div>
 
@@ -90,7 +92,9 @@
             let content = txt.value;
 
             if (!isRunning) {
-                notes = stringToNotes(content);
+                let startLine = parseInt($("#startLine").val());
+                notes = stringToNotes(content, startLine);
+                tempo = 1;
                 if (notes != undefined) {
                     isRunning = true;
                     shouldStop = false;
@@ -116,10 +120,6 @@
                 elem.text(name);
                 elem.addClass("list-group-item d-flex justify-content-between align-items-center");
                 elem.attr("style", "cursor: pointer");
-
-                //let btnLoad = $("<button></button>");
-                //btnLoad.addClass("btn btn-success btn-sm");
-                //btnLoad.text("Load");
 
                 elem.click(function(){ loadSheetCb(name); });
 

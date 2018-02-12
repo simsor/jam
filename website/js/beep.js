@@ -98,9 +98,10 @@ var notesFreqs = {
 // create web audio api context
 var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-function stringToNotes(s) {
+function stringToNotes(s, start) {
     let notes = [];
     let lines = s.split("\n");
+    lines = lines.splice(start-1);
     for (let i=0; i < lines.length; i++) {
         let line = lines[i].trim();
         let parts = line.split(" ")
