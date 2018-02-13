@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"os/exec"
 	"runtime"
@@ -48,6 +49,7 @@ func (ws *WebServer) OpenBrowser() {
 
 	err := exec.Command(command, args...).Start()
 	if err != nil {
-		panic(err)
+		fmt.Println("Error launching your web browser...")
+		fmt.Println("Please manually go to http://127.0.0.1:8080")
 	}
 }
